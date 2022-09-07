@@ -28,12 +28,42 @@ public class SpartanGetRequest {
        Response response = given().accept(ContentType.JSON)
                             .when().get(sUrl + "/api/spartans/3");
 
-        assertEquals(response.statusCode(), 200);
+       assertEquals(response.statusCode(), 200);
 
-        assertEquals(response.contentType(), "application/json");
+       assertEquals(response.contentType(), "application/json");
 
-        assertTrue(response.body().asString().contains("Fidole"));
+       assertTrue(response.body().asString().contains("Fidole"));
 
         response.prettyPrint();
+    }
+
+    @Test
+    public void test2(){
+
+         /*
+         Given no headers provided
+         When user sends GET request to /api/hello
+         Then response status code should be 200
+         And content type header should be "text/plain;charset=UTF-8
+         And header should contain date
+         And Content-Length should be 17
+         And Connection should be keep-alive
+         And body should be "Hello from Sparta"
+          */
+
+        Response response = get(sUrl + "/api/hello");
+
+        assertEquals(response.statusCode(), 200);
+
+        assertEquals(response.contentType(), "text/plain;charset=UTF-8");
+
+        assertTrue(response.headers().hasHeaderWithName("Date"));
+
+        assertEquals(response.header("Content-Length"), "17");
+
+        assertEquals(response.header("Connection"), "keep-alive");
+
+        assertEquals(response.body().asString(), "Hello from Sparta");
+
     }
 }
