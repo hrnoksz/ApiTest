@@ -1,4 +1,4 @@
-package dayo2;
+package day02;
 
 
 
