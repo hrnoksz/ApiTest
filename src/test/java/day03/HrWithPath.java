@@ -68,6 +68,21 @@ public class HrWithPath {
         String firstHref = response.path("items[0].links[0].href");
         System.out.println("firstHref = " + firstHref);
 
+    }
+    @Test
+    public void test2(){
+
+        Response response = given().accept(ContentType.JSON)
+                .and().queryParam("q", "{\"job_id\":\"IT_PROG\"}")
+                .when().get("/employees");
+        response.prettyPrint();
+        assertEquals(response.statusCode(), 200);
+        assertEquals(response.contentType(), "application/json");
+
+        List<String> allJobIds = response.path("items.job_id");
+        for (String eachJobId : allJobIds) {
+            assertEquals(eachJobId, "IT_PROG");
+        }
 
     }
 
