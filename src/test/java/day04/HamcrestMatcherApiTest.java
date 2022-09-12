@@ -58,4 +58,42 @@ public class HamcrestMatcherApiTest {
                         "phone", equalTo(1938695106));
 
     }
+
+    @Test
+    public void test3() {
+
+        given()
+                .accept(ContentType.JSON)
+                .pathParam("id", 100)
+        .when()
+                .get(ConfigurationReader.getProperty("hr_url") + "/employees/{id}")
+        .then()
+                .statusCode(200).and()
+                .contentType("application/json").and()
+                .header("Date", notNullValue())
+                .header("Transfer-Encoding", is("chunked"))
+                .and().assertThat()
+                .body("employee_id", is(100),
+                        "first_name", is("Steven"),
+                        "last_name", is("King"),
+                        "links[0].href", is("http://3.83.123.243:1000/ords/hr/employees/100"));
+    }
 }
+/*
+"employee_id": 100,
+    "first_name": "Steven",
+    "last_name": "King",
+    "email": "SKING",
+    "phone_number": "515.123.4567",
+    "hire_date": "2003-06-17T00:00:00Z",
+    "job_id": "AD_PRES",
+    "salary": 24000,
+    "commission_pct": null,
+    "manager_id": null,
+    "department_id": 90,
+    "links": [
+        {
+            "rel": "self",
+            "href": "http://3.83.123.243:1000/ords/hr/employees/100"
+        },
+ */
