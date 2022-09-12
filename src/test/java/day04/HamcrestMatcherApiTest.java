@@ -47,9 +47,9 @@ public class HamcrestMatcherApiTest {
         given()
                 .accept(ContentType.JSON)
                 .and().pathParam("id", 15)
-                .when()
+        .when()
                 .get(ConfigurationReader.getProperty("spartan_url") + "/api/spartans/{id}")
-                .then().statusCode(200)
+        .then().statusCode(200)
                 .and().contentType("application/json")
                 .and().assertThat()
                 .body("id", equalTo(15),
