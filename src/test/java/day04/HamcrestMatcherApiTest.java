@@ -6,6 +6,8 @@ import utilities.ConfigurationReader;
 
 import static io.restassured.RestAssured.*;
 import static org.testng.Assert.*;
+import org.hamcrest.Matchers;
+import static org.hamcrest.Matchers.*;
 
 public class HamcrestMatcherApiTest {
 
@@ -26,10 +28,34 @@ public class HamcrestMatcherApiTest {
     @Test
     public void spartanWithHamcrest() {
 
-        Response response = given().accept(ContentType.JSON)
+       given()
+               .accept(ContentType.JSON)
+               .and().pathParam("id", 15)
+       .when()
+               .get(ConfigurationReader.getProperty("spartan_url") + "/api/spartans/{id}")
+       .then().statusCode(200)
+               .and().contentType("application/json")
+               .and().assertThat()
+               .body("id", is(15),
+                       "name", is("Meta"),
+                       "gender", is("Female"),
+                       "phone", is(1938695106));
+    }
+
+    @Test
+    public void test2() {
+        given()
+                .accept(ContentType.JSON)
                 .and().pathParam("id", 15)
-                .when().get(ConfigurationReader.getProperty("spartan_url") + "/api/spartans/{id}");
-        response.prettyPrint();
+                .when()
+                .get(ConfigurationReader.getProperty("spartan_url") + "/api/spartans/{id}")
+                .then().statusCode(200)
+                .and().contentType("application/json")
+                .and().assertThat()
+                .body("id", equalTo(15),
+                        "name", equalTo("Meta"),
+                        "gender", equalTo("Female"),
+                        "phone", equalTo(1938695106));
 
     }
 }
