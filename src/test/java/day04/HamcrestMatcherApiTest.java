@@ -64,7 +64,7 @@ public class HamcrestMatcherApiTest {
 
         given()
                 .accept(ContentType.JSON)
-                .pathParam("id", 100)
+                .pathParam("id", 100).log().all()
         .when()
                 .get(ConfigurationReader.getProperty("hr_url") + "/employees/{id}")
         .then()
@@ -76,7 +76,8 @@ public class HamcrestMatcherApiTest {
                 .body("employee_id", is(100),
                         "first_name", is("Steven"),
                         "last_name", is("King"),
-                        "links[0].href", is("http://3.83.123.243:1000/ords/hr/employees/100"));
+                        "links[0].href", is("http://3.83.123.243:1000/ords/hr/employees/100"))
+                .log().all();
     }
 }
 /*
