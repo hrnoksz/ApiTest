@@ -79,22 +79,30 @@ public class HamcrestMatcherApiTest {
                         "links[0].href", is("http://3.83.123.243:1000/ords/hr/employees/100"))
                 .log().all();
     }
+
+    @Test
+    public void test4() {
+
+        given()
+                .accept(ContentType.JSON)
+                .queryParam("q", "{\"job_id\":\"IT_PROG\"}")
+                .and().log().all()
+        .when()
+                .get(ConfigurationReader.getProperty("hr_url") + "/employees")
+        .then()
+                .statusCode(200)
+                .contentType("application/json")
+                .header("Date", notNullValue())
+                .header("Transfer-Encoding", is("chunked"))
+                .and().assertThat()
+                .body("items[0].first_name", is("Alexander"),
+                        "items[0].salary", is(9000),
+                        "items[0].links[0].href", is("http://3.83.123.243:1000/ords/hr/employees/103"),
+                        "items[1].employee_id", is(104),
+                        "items.first_name", hasItems("Alexander", "Bruce", "David", "Valli", "Diana"))
+                .and().log().all();
+
+
+
+    }
 }
-/*
-"employee_id": 100,
-    "first_name": "Steven",
-    "last_name": "King",
-    "email": "SKING",
-    "phone_number": "515.123.4567",
-    "hire_date": "2003-06-17T00:00:00Z",
-    "job_id": "AD_PRES",
-    "salary": 24000,
-    "commission_pct": null,
-    "manager_id": null,
-    "department_id": 90,
-    "links": [
-        {
-            "rel": "self",
-            "href": "http://3.83.123.243:1000/ords/hr/employees/100"
-        },
- */
