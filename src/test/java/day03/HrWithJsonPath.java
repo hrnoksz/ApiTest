@@ -87,8 +87,8 @@ public class HrWithJsonPath {
         List<String> jobIdItProg = jsonPath.getList("items.findAll {it.job_id==\"IT_PROG\"}.first_name");
         System.out.println("jobIdItProg = " + jobIdItProg);
 
-        //Print all employees first name whose salary is more than 24000
-        List<String> empList = jsonPath.getList("items.findAll{it.salary > 2400}.first_name");
+        //Print all employees first name whose salary is more than 13000
+        List<String> empList = jsonPath.getList("items.findAll{it.salary > 13000}.first_name");
         System.out.println("empList = " + empList);
 
         //print employee whose salary is maximum
