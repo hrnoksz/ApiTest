@@ -15,7 +15,7 @@ import java.util.Map;
 import static io.restassured.RestAssured.*;
 import static org.testng.Assert.*;
 
-public class jsonToJavaCollection {
+public class JsonToJavaCollection {
 
     @BeforeClass
     public void init(){
