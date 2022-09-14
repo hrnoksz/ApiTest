@@ -49,7 +49,7 @@ public class JsonToJavaCollection {
     }
 
     @Test
-    public void allSpartansToMap() {
+    public void allSpartansToList() {
 
         Response response = given().accept(ContentType.JSON)
                 .when().get("api/spartans")
@@ -57,7 +57,13 @@ public class JsonToJavaCollection {
 
         List<Map<String, Object>> jsonList = response.as(List.class);
 
-        System.out.println("jsonList = " + jsonList);
+        System.out.println("jsonList.size() = " + jsonList.size());
+
+        int count = 1;
+        for (Map<String, Object> eachSpartan : jsonList) {
+            System.out.println("eachSpartan" + count + " = " + eachSpartan);
+            count++;
+        }
 
         System.out.println("jsonList.get(0).get(\"name\") = " + jsonList.get(0).get("name"));
 
@@ -65,5 +71,38 @@ public class JsonToJavaCollection {
         System.out.println("spartan3 = " + spartan3);
 
         assertEquals(jsonList.get(1).get("name"), "Nels");
+    }
+
+    @Test
+    public void region() {
+
+        Response response = given()
+                                .accept(ContentType.JSON)
+                           .when()
+                                .get("http://3.83.123.243:1000/ords/hr/regions")
+                          .then().statusCode(200).extract().response();
+
+        //Convert json to java collection-->deserialization
+
+        Map<String, Object> regionMap = response.as(Map.class);
+
+        System.out.println("regionMap.get(\"count\") = " + regionMap.get("count"));
+
+        System.out.println("regionMap.get(\"hasMore\") = " + regionMap.get("hasMore"));
+
+        List<Map<String, Object>> itemList = (List<Map<String, Object>>) regionMap.get("items");
+
+        int count = 1;
+        for (Map<String, Object> eachMap : itemList) {
+            System.out.println("eachMap" + count + " = " + eachMap);
+            count++;
+        }
+
+        Map<String, Object> itemsTwo = itemList.get(1);
+        System.out.println("itemsTwo = " + itemsTwo);
+
+        System.out.println("itemList.get(1).get(\"region_name\") = " + itemList.get(1).get("region_name"));
+
+        assertEquals(itemList.get(1).get("region_name"), "Americas");
     }
 }
