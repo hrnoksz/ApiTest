@@ -60,7 +60,11 @@
             <version>5.2.2</version>
         </dependency>
 
-
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+        </dependency>
 
         <!--If you want to get rid of SLF4J Failed to load message from the console -->
         <dependency>
