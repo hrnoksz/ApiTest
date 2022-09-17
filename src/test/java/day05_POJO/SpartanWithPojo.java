@@ -1,5 +1,6 @@
 package day05_POJO;
 
+import com.google.gson.Gson;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -53,5 +54,29 @@ public class SpartanWithPojo {
         System.out.println("s63.getName() = " + s63.getName());
         System.out.println("s63.getPhone() = " + s63.getPhone());
 
+    }
+
+    @Test
+    public void gsonExample() {
+
+        Gson gson = new Gson();
+
+        String myJsonBody = "{\n" +
+                "    \"id\": 63,\n" +
+                "    \"name\": \"Clayton\",\n" +
+                "    \"gender\": \"Male\",\n" +
+                "    \"phone\": 1782167106\n" +
+                "}";
+        //using gson method to do deserialize our json body
+        Spartan spartanClayton = gson.fromJson(myJsonBody, Spartan.class);
+        System.out.println("spartanClayton.toString() = " + spartanClayton.toString());
+
+        //serialization Java object --> JSON body
+
+        Spartan spartan = new Spartan(101, "Mike", "Male", 321342123);
+        //Converting custom class to json body (serialization)
+        String jsonBody = gson.toJson(spartan);
+
+        System.out.println("jsonBody = " + jsonBody);
     }
 }

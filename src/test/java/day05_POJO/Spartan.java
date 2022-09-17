@@ -19,6 +19,13 @@ public class Spartan {
 
     }
 
+    public Spartan(int id, String name, String gender, long phone) {
+        this.id = id;
+        this.name = name;
+        this.gender = gender;
+        this.phone = phone;
+    }
+
     public int getId(){
         return this.id;
     }

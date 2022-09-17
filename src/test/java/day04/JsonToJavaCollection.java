@@ -83,13 +83,15 @@ public class JsonToJavaCollection {
                           .then().statusCode(200).extract().response();
 
         //Convert json to java collection-->deserialization
-
+        // we assign all json body to map
         Map<String, Object> regionMap = response.as(Map.class);
 
         System.out.println("regionMap.get(\"count\") = " + regionMap.get("count"));
 
         System.out.println("regionMap.get(\"hasMore\") = " + regionMap.get("hasMore"));
 
+        //In order to get all items, we use list of map. Because regionMap returns map, we
+        //should do casting
         List<Map<String, Object>> itemList = (List<Map<String, Object>>) regionMap.get("items");
 
         int count = 1;
@@ -104,5 +106,10 @@ public class JsonToJavaCollection {
         System.out.println("itemList.get(1).get(\"region_name\") = " + itemList.get(1).get("region_name"));
 
         assertEquals(itemList.get(1).get("region_name"), "Americas");
+
+        List<Map<String, Object>> linksList = (List<Map<String, Object>>) regionMap.get("links");
+        System.out.println("linksList = " + linksList);
+
+        assertEquals(linksList.get(0).get("href"), "http://3.83.123.243:1000/ords/hr/regions/");
     }
 }
