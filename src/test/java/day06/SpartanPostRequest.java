@@ -7,6 +7,10 @@ import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import utilities.ConfigurationReader;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static io.restassured.RestAssured.*;
@@ -56,6 +60,33 @@ public class SpartanPostRequest {
 
         String expectedMessage = "A Spartan is Born!";
         assertThat(response.path("success"), is(expectedMessage));
+    }
+
+    @Test
+    public void postMethod2(){
+
+        //Create a map to keep request json body information
+        Map<String, Object> requestJsonMap = new HashMap<>();
+        requestJsonMap.put("gender", "Male");
+        requestJsonMap.put("name", "Frank");
+        requestJsonMap.put("phone", 5554111111l);
+
+        Response response = given().accept(ContentType.JSON) //what we are asking from API which is JSON response
+                .and().contentType(ContentType.JSON) //What we are sending to API, which is JSON also.
+                .body(requestJsonMap) //We use body() method to send our request
+                .when().post("api/spartans");
+        response.prettyPrint();
+
+        assertThat(response.statusCode(), is(201));
+        assertThat(response.contentType(), is("application/json"));
+        assertThat(response.path("data.name"), is("Frank"));
+        assertThat(response.path("data.gender"), is("Male"));
+        assertThat(response.path("data.phone"), is(5554111111l));
+
+        String expectedMessage = "A Spartan is Born!";
+        assertThat(response.path("success"), is(expectedMessage));
+
+
     }
 
 }
