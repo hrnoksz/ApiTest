@@ -1,5 +1,6 @@
 package day06;
 
+import day05_POJO.Spartan;
 import org.testng.annotations.BeforeClass;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -85,8 +86,32 @@ public class SpartanPostRequest {
 
         String expectedMessage = "A Spartan is Born!";
         assertThat(response.path("success"), is(expectedMessage));
-
-
     }
+
+    @Test
+    public void postMethod3(){
+
+        //Create one object from your POJO, send it as a JSON
+        Spartan spartan = new Spartan();
+        spartan.setName("Frank");
+        spartan.setGender("Male");
+        spartan.setPhone(5554111111l);
+
+        Response response = given().accept(ContentType.JSON) //what we are asking from API which is JSON response
+                .and().contentType(ContentType.JSON) //What we are sending to API, which is JSON also.
+                .body(spartan).log().all() //We use body() method to send our request
+                .when().post("api/spartans");
+        response.prettyPrint();
+
+        assertThat(response.statusCode(), is(201));
+        assertThat(response.contentType(), is("application/json"));
+        assertThat(response.path("data.name"), is("Frank"));
+        assertThat(response.path("data.gender"), is("Male"));
+        assertThat(response.path("data.phone"), is(5554111111l));
+
+        String expectedMessage = "A Spartan is Born!";
+        assertThat(response.path("success"), is(expectedMessage));
+    }
+
 
 }

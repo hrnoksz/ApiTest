@@ -74,11 +74,11 @@ public class SpartanWithPojo {
 
         //serialization Java object --> JSON body
 
-        Spartan spartan = new Spartan(101, "Mike",
-                "Male", 321342123);
+        //Spartan spartan = new Spartan(101, "Mike",
+                //"Male", 321342123);
         //Converting custom class to json body (serialization)
-        String jsonBody = gson.toJson(spartan);
+        //String jsonBody = gson.toJson(spartan);
 
-        System.out.println("jsonBody = " + jsonBody);
+        //System.out.println("jsonBody = " + jsonBody);
     }
 }
