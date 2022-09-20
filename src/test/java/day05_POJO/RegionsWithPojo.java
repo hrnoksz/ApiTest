@@ -39,4 +39,27 @@ public class RegionsWithPojo {
         assertThat(links.get(0).href, is("http://3.83.123.243:1000/ords/hr/regions/"));
 
     }
+
+    @Test
+    public void test1(){
+
+        Regions regions = given().accept(ContentType.JSON)
+                .when().get("/regions")
+                .then().statusCode(200).extract().jsonPath().getObject("", Regions.class);
+
+        for (Item item : regions.getItems()) {
+            System.out.println("item.getRegion_id() = " + item.getRegion_id());
+            System.out.println("item.getRegion_name() = " + item.getRegion_name());
+        }
+
+        assertThat(regions.getCount(), is(4));
+
+        assertThat(regions.getItems().get(0).getRegion_name(), is("Europe"));
+
+        assertThat(regions.getLinks().get(0).getHref(), is("http://3.83.123.243:1000/ords/hr/regions/"));
+
+        System.out.println("regions.getItems().get(0).getLinks().get(0).getHref() = " +
+                "" + regions.getItems().get(0).getLinks().get(0).getHref());
+
+    }
 }
