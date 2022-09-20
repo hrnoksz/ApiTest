@@ -67,11 +67,8 @@ public class SimpleGetRequest {
          */
         Response response = RestAssured.given().accept(ContentType.JSON)
                 .when().get(baseUrl + "/regions/2");
-
         Assert.assertEquals(response.statusCode(), 200);
-
         Assert.assertEquals(response.contentType(), "application/json");
-
         Assert.assertTrue(response.body().asString().contains("Americas"));
     }
 

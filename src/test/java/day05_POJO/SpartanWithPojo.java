@@ -69,11 +69,13 @@ public class SpartanWithPojo {
                 "}";
         //using gson method to do deserialize our json body
         Spartan spartanClayton = gson.fromJson(myJsonBody, Spartan.class);
-        System.out.println("spartanClayton.toString() = " + spartanClayton.toString());
+        System.out.println("spartanClayton.toString() = "
+                + spartanClayton.toString());
 
         //serialization Java object --> JSON body
 
-        Spartan spartan = new Spartan(101, "Mike", "Male", 321342123);
+        Spartan spartan = new Spartan(101, "Mike",
+                "Male", 321342123);
         //Converting custom class to json body (serialization)
         String jsonBody = gson.toJson(spartan);
 
