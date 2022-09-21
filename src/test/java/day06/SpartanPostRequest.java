@@ -113,5 +113,44 @@ public class SpartanPostRequest {
         assertThat(response.path("success"), is(expectedMessage));
     }
 
+    @Test
+    public void postMethod4(){
+        //this example we implement serialization with creating spartan object sending as a request body
+        //also implemented deserialization getting the id,sending get request and saving that body as a response
+
+        //Create one object from your POJO, send it as a JSON
+        Spartan spartan = new Spartan();
+        spartan.setName("Frank");
+        spartan.setGender("Male");
+        spartan.setPhone(5554111111l);
+
+        int idFromPost = given().accept(ContentType.JSON)
+                .and().contentType(ContentType.JSON)
+                .body(spartan).log().all()
+                .when().post("api/spartans")
+                .then().statusCode(201)
+                .contentType("application/json")
+                .body("success", is("A Spartan is Born!"))
+                .extract().jsonPath().getInt("data.id");
+
+        System.out.println("idFromPost = " + idFromPost);
+
+        // send a GET request to id
+       Spartan spartanPosted = given().accept(ContentType.JSON)
+                .pathParam("id", idFromPost)
+                .when().get("/api/spartans/{id}")
+                .then().statusCode(200).log().all()
+                .contentType("application/json").extract().as(Spartan.class);
+
+       assertThat(spartanPosted.getName(), is(spartan.getName()));
+       assertThat(spartanPosted.getGender(), is(spartan.getGender()));
+       assertThat(spartanPosted.getPhone(), is(spartan.getPhone()));
+       assertThat(spartanPosted.getId(), is(idFromPost));
+
+
+
+    }
+
+
 
 }
